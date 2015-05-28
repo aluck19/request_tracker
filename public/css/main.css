@@ -1,0 +1,109 @@
+/* Color Used
+ ----------------------------------
+ ---------------------------------------------
+ Green: #15A781
+ Brown: #FAB037
+ */
+body {
+	font-family: Georgia, sans-serif;
+	font-size: 16px;
+	color: #000;
+	margin: 0;
+	height: 100% !important;
+	background: #fff;
+}
+div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;
+}
+.noMgPd{
+	margin: 0;
+	padding: 0;
+}
+#bodyWrapper {
+	background: #fafafa;
+}
+/*----------- Header --------------*/
+header {
+	padding: 10px;
+	background: -moz-linear-gradient(left, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(151,252,225,1)), color-stop(46%, rgba(36,212,165,1)), color-stop(50%, rgba(26,209,160,1)), color-stop(58%, rgba(26,208,159,1)), color-stop(100%, rgba(25,200,153,1)));
+	background: -webkit-linear-gradient(left, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	background: -o-linear-gradient(left, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	background: -ms-linear-gradient(left, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	background: linear-gradient(to right, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#97fce1', endColorstr='#19c899', GradientType=1 );
+	text-align: center;
+	color: #fff;
+	height: 90px;
+	border-bottom: 2px solid #08C594;
+}
+header h1 {
+	line-height: 70px;
+}
+/*----------- Wrapper --------------*/
+#bodyWrapper {
+	min-height: 100% !important;
+	position: relative !important;
+}
+/*----------- Content --------------*/
+#mainContent {
+	padding: 20px;
+	padding-bottom: 70px !important; /* Height of the footer element */
+}
+#menuPlate {
+	margin-top: 10px;
+}
+#notifications {
+    margin-top: 10px;
+    overflow: scroll;
+    overflow-x: unset;
+    height: 375px;
+}
+#menuPlate ul li {
+	list-style: none;
+}
+.comment {
+	margin: 20px;
+}
+#selected {
+	font-weight: bold;
+}
+.log-entries {
+	margin-top: 10px;
+	margin-left: 20px;
+}
+.ui.ribbon.label {
+	font-size: 18px;
+}
+.ui.celled.striped.table a:hover {
+	text-decoration: none;
+}
+ul.pagination {
+  margin: 0;
+}
+/*----------- Footer --------------*/
+footer {
+	width: 100% !important;
+	height: 50px !important;
+	position: absolute !important;
+	bottom: 0 !important;
+	left: 0 !important;
+	background: -moz-linear-gradient(left, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(151,252,225,1)), color-stop(46%, rgba(36,212,165,1)), color-stop(50%, rgba(26,209,160,1)), color-stop(58%, rgba(26,208,159,1)), color-stop(100%, rgba(25,200,153,1)));
+	background: -webkit-linear-gradient(left, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	background: -o-linear-gradient(left, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	background: -ms-linear-gradient(left, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	background: linear-gradient(to right, rgba(151,252,225,1) 0%, rgba(36,212,165,1) 46%, rgba(26,209,160,1) 50%, rgba(26,208,159,1) 58%, rgba(25,200,153,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#97fce1', endColorstr='#19c899', GradientType=1 );
+	color: #fff;
+	border-top: 2px solid #08C594;
+}
+div#liscene p {
+	line-height: 25px;
+}
+div#liscene {
+	position: relative;
+	top: 10px;
+	text-align: center;
+}

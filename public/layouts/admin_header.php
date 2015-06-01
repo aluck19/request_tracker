@@ -12,7 +12,7 @@
 		<!-- Semantic CSS -->
 		<link href="../semantic/semantic.min.css" type="text/css" rel="stylesheet"/>
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="../js/jquery.min.js"></script>
+		<script src="../js/jquery.min.js"></script>	
 		<!-- Semantic JS -->
 		<script src="../semantic/semantic.min.js" type="text/javascript" ></script>
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

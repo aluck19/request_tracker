@@ -126,8 +126,7 @@ if ($_SESSION['role'] != "student") {
 	}
 }
 ?>
-<?php foreach($notifications as $notification):
-?>
+<?php foreach($notifications as $notification):?>
 <?php
 if ($_SESSION['role'] != "student") {
 	echo "

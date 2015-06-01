@@ -43,6 +43,13 @@ if (!$session -> is_logged_in() || $_SESSION['role']!="admin") { redirect_to("lo
 
 <?php echo output_message($message); ?>
 
+<br>
+
+<form method="get" action="search.php">
+    <input  name="username" value="" >
+    <input type="submit">
+ </form>
+
 <div style="min-height: 8rem; padding-bottom: 40px;" class="ui stacked segment">
 	<p class="ui ribbon label">User List</p>
 	<table class="ui celled striped table">

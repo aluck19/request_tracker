@@ -5,7 +5,8 @@ require_once ("../../includes/initialize.php");
 if (!$session -> is_logged_in()) { redirect_to("login.php");
 }
  ?>
- <?php // 1. the current page number ($current_page)
+ <?php 
+ 	// 1. the current page number ($current_page)
 	$page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
 
 	// 2. records per page ($per_page)

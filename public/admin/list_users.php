@@ -16,7 +16,10 @@ if (!$session -> is_logged_in() || $_SESSION['role']!="admin") { redirect_to("lo
 	// 3. total record count ($total_count)
 	$total_count = User::count_all();
 		
-	
+	//4. to limit pagination number
+	// 3 means abc[page]efg -> 3 right, 3 left
+	$stages = 2;
+		
 	$pagination = new Pagination($page, $per_page, $total_count);
 	
 	// Instead of finding all records, just find the records 
@@ -45,13 +48,21 @@ if (!$session -> is_logged_in() || $_SESSION['role']!="admin") { redirect_to("lo
 
 <br>
 
-<form method="get" action="search.php">
-    <input  name="username" value="" >
-    <input type="submit">
- </form>
 
 <div style="min-height: 8rem; padding-bottom: 40px;" class="ui stacked segment">
 	<p class="ui ribbon label">User List</p>
+	<br>
+	<br>
+	<form method="get" action="search.php">
+
+<div class="ui left icon input">
+  <input placeholder="Search..." type="text" name="username" value="" required="">
+  <i class="search icon"></i>
+</div>    
+    <input class="ui blue button" type="submit"/>
+ </form>
+
+
 	<table class="ui celled striped table">
 		<thead>
 		  <tr>
@@ -91,36 +102,101 @@ if (!$session -> is_logged_in() || $_SESSION['role']!="admin") { redirect_to("lo
 	  </tr>  
 	<?php endforeach; ?>
 	</table>
-	<div id="pagination">
-<ul>	
+	
 <?php
-	if($pagination->total_pages() > 1) {
-		
-		if($pagination->has_previous_page()) { 
-    	echo "<li><a href=\"list_users.php?page=";
-      echo $pagination->previous_page();
-      echo "\">&laquo; Previous</a></li> "; 
-    }
 
-		for($i=1; $i <= $pagination->total_pages(); $i++) {
-			if($i == $page) {
-				echo "<li id=\"selected\">{$i}</li> ";
-			} else {
-				echo "<li><a href=\"list_users.php?page={$i}\">{$i}</a></li> "; 
-			}
-		}
+$prev = $pagination -> previous_page();
+$next = $pagination -> next_page();
 
-		if($pagination->has_next_page()) { 
-			echo "<li> <a href=\"list_users.php?page=";
-			echo $pagination->next_page();
-			echo "\">Next &raquo;</a></li> "; 
-    }
-		
+$lastpage = $pagination -> total_pages();
+
+$LastPagem1 = $lastpage - 1;
+
+$paginate = '';
+
+if ($lastpage > 1) {
+
+	$paginate .= "<ul class='pagination'>";
+
+	// Previous
+	if ($pagination -> has_previous_page()) {
+		$paginate .= "<li><a href='list_users.php?page=$prev'>&laquo; Previous</a></li>";
+
 	}
 
+	// Pages
+	if ($lastpage < 7 + ($stages * 2))// Not enough pages to breaking it up
+	{
+		for ($counter = 1; $counter <= $lastpage; $counter++) {
+			if ($counter == $page) {
+				$paginate .= "<li class='active'><a href='list_users.php?page=$counter'>$counter</a></li>";
+			} else {
+				$paginate .= "<li><a href='list_users.php?page=$counter'>$counter</a><li>";
+			}
+		}
+	} elseif ($lastpage > 5 + ($stages * 2))// Enough pages to hide a few?
+	{
+		// Beginning only hide later pages
+		if ($page < 1 + ($stages * 2)) {
+			for ($counter = 1; $counter < 4 + ($stages * 2); $counter++) {
+				if ($counter == $page) {
+					$paginate .= "<li class='active'><a href='list_users.php?page=$counter'>$counter</a></li>";
+				} else {
+					$paginate .= "<li><a href='list_users.php?page=$counter'>$counter</a></li>";
+				}
+			}
+			$paginate .= "<li class='disabled'><a>...</a></li>";
+			$paginate .= "<li><a href='list_users.php?page=$LastPagem1'>$LastPagem1</a></li>";
+			$paginate .= "<li><a href='list_users.php?page=$lastpage'>$lastpage</a></li>";
+		}
+		// Middle hide some front and some back
+		elseif ($lastpage - ($stages * 2) > $page && $page > ($stages * 2)) {
+			$paginate .= "<li><a href='list_users.php?page=1'>1</a></li>";
+			$paginate .= "<li><a href='list_users.php?page=2'>2</a></li>";
+			$paginate .= "<li class='disabled'><a>...</a></li>";
+			for ($counter = $page - $stages; $counter <= $page + $stages; $counter++) {
+				if ($counter == $page) {
+					$paginate .= "<li class='active'><a href='list_users.php?page=$counter'>$counter</a></li>";
+				} else {
+					$paginate .= "<li><a href='list_users.php?page=$counter'>$counter</a></li>";
+				}
+			}
+			$paginate .= "<li class='disabled'><a>...</a></li>";
+			$paginate .= "<li><a href='list_users.php?page=$LastPagem1'>$LastPagem1</a></li>";
+			$paginate .= "<li><a href='list_users.php?page=$lastpage'>$lastpage</a></li>";
+		}
+		// End only hide early pages
+		else {
+			$paginate .= "<li><a href='list_users.php?page=1'>1</a></li>";
+			$paginate .= "<li><a href='list_users.php?page=2'>2</a></li>";
+			$paginate .= "<li class='disabled'><a>...</a></li>";
+			for ($counter = $lastpage - (2 + ($stages * 2)); $counter <= $lastpage; $counter++) {
+				if ($counter == $page) {
+					$paginate .= "<li class='active'><a href='list_users.php?page=$counter'>$counter</a></li>";
+				} else {
+					$paginate .= "<li><a href='list_users.php?page=$counter'>$counter</li>";
+				}
+			}
+		}
+	}
+
+	// Next
+	if ($pagination -> has_next_page()) {
+		$paginate .= "<li><a href='list_users.php?page=$next'>Next &raquo;</a></li>";
+
+	}
+
+	$paginate .= "</ul>";
+
+}
+
+//total Result count
+echo "<p><b>Total Result:</b> {$total_count}</p>";
+
+// pagination
+echo $paginate;
+
 ?>
-<ul>
-</div>
 
 </div> <!-- segment -->
 

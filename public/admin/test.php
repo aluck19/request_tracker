@@ -35,14 +35,27 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 
 	// Need to add ?page=$page to all links we want to
 	// maintain the current page (or store $page in $session)
+	
+	
 ?>
 
+
+
+
+	
+	
 <?php include_layout_template('admin_header.php'); ?>
 
 <a class="ui blue basic button" href="index.php">&laquo; Back</a>
 <br/>
 
 <?php echo output_message($message); ?>
+
+<br>
+<form method="post" action="excel.php">
+<input class="ui button" type="submit" name="excel" value="Submit"/>
+</form>
+
 
 <div style="min-height: 8rem; padding-bottom: 40px;" class="ui stacked segment">
 	<p class="ui ribbon label">Request List</p>

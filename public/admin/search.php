@@ -6,22 +6,37 @@ if (!$session -> is_logged_in() || $_SESSION['role'] != "admin") { redirect_to("
 }
 
 if (isset($_POST['submit'])) {
-	$username = trim($_POST['username']);
+	$keyword = trim($_POST['keyword']);
+	
+	$keys =explode(' ',$keyword);
 
 	// for this page
-	$sql = "SELECT * FROM users where username = '{$username}' ";
-
+	$sql = "SELECT * FROM users where username LIKE  '%$keyword%' OR username LIKE '%$keyword' OR last_name
+			 LIKE '%$keyword%' OR first_name LIKE '%$keyword' OR role LIKE '%$keyword%' ";
+	
+	foreach ($keys as $k) {
+		$sql .= "OR username LIKE '%$k' OR last_name LIKE '%$k%' OR first_name LIKE '%$k' OR role LIKE '%$k%' ";
+	}
+		
 	$users = User::find_by_sql($sql);
 
 	if (empty($users)) {
 		$message = "User not found.";
 	}
 }
- elseif(!empty($_GET['username'])) {
+ elseif(!empty($_GET['keyword'])) {
 	
-	$username = $_GET['username'];	
+	$keyword = $_GET['keyword'];	
 
-	$sql = "SELECT * FROM users where username = '{$username}' ";
+	$keys =explode(' ',$keyword);
+
+	// for this page
+	$sql = "SELECT * FROM users where username LIKE  '%$keyword%' OR username LIKE '%$keyword' OR last_name
+			 LIKE '%$keyword%' OR first_name LIKE '%$keyword' OR role LIKE '%$keyword%' ";
+	
+	foreach ($keys as $k) {
+		$sql .= "OR username LIKE '%$k' OR last_name LIKE '%$k%' OR first_name LIKE '%$k' OR role LIKE '%$k%' ";
+	}
 
 	$users = User::find_by_sql($sql);
 
@@ -29,9 +44,9 @@ if (isset($_POST['submit'])) {
 		$message = "User not found.";
 	}
 } else {
-	$username = "";
+	$keyword = "";
 	
-	$sql = "SELECT * FROM users where username = '{$username}' ";
+	$sql = "SELECT * FROM users where username = '{$keyword}' ";
 	$users = User::find_by_sql($sql);	
 }
 ?>
@@ -49,13 +64,13 @@ if (isset($_POST['submit'])) {
 	<p class="ui ribbon label">User List</p>
 		<br>
 	<br>
-	<form method="get" action="search.php">
+	<form method="post" action="search.php">
 
 <div class="ui left icon input">
-  <input placeholder="Search..." type="text" name="username" value="" required="">
+  <input placeholder="Search..." type="text" name="keyword" value="" required="">
   <i class="search icon"></i>
 </div>    
-    <input class="ui blue button" type="submit"/>
+    <input class="ui blue button" name="submit" type="submit"/>
  </form>
 
 

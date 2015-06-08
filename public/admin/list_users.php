@@ -56,7 +56,7 @@ if (!$session -> is_logged_in() || $_SESSION['role']!="admin") { redirect_to("lo
 	<form method="get" action="search.php">
 
 <div class="ui left icon input">
-  <input placeholder="Search..." type="text" name="username" value="" required="">
+  <input placeholder="Search..." type="text" name="keyword" value="" required="">
   <i class="search icon"></i>
 </div>    
     <input class="ui blue button" type="submit"/>

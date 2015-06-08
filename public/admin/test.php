@@ -53,7 +53,7 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 
 <br>
 <form method="post" action="excel.php">
-<input class="ui button" type="submit" name="excel" value="Submit"/>
+<input class="ui button" type="submit" name="excel" value="Export as Excel"/>
 </form>
 
 

@@ -8,6 +8,7 @@ if (isset($_POST['submit'])) {
 
 	//creating a new request
 	$request = new Request();
+	$request -> department = strtolower($_POST['department']);
 	$request -> subject = $_POST['subject'];
 	$request -> description = $_POST['description'];
 	$request -> expected_solution = $_POST['expected_solution'];
@@ -27,6 +28,7 @@ if (isset($_POST['submit'])) {
 		$first_name = $user ->first_name;
 				
 		$notification -> body = "A new request has been created by {$first_name}.";
+		$notification -> department = $request -> department;
 		$notification -> created = strftime("%Y-%m-%d %H:%M:%S", time());
 		$notification -> save();
 
@@ -57,21 +59,31 @@ if (isset($_POST['submit'])) {
 	<form action="requests.php" method="post" style="margin-top: 10px;">
 		<div class="ui form">
 			<div class="field">
+				<label>Department</label>
+				<select name="department" class="ui dropdown" >
+					<option>Library</option>
+					<option>Canteen</option>
+					<option>Account</option>
+					<option>Doctor</option>
+					<option>Administration</option>
+				</select>
+			</div>			
+			<div class="field">
 				<label>Subject</label>
 				<div>
-					<input type="text" name="subject">
+					<input type="text" name="subject" required>
 				</div>
 			</div>
 			<div class="field">
 				<label>Decription</label>
 				<div >
-					<textarea name="description" rows="5" cols="80"></textarea>
+					<textarea name="description" rows="5" cols="80" required></textarea>
 				</div>
 			</div>
 			<div class="field">
 				<label>Expected Solution</label>
 				<div >
-					<textarea name="expected_solution" rows="5" cols="80"></textarea>
+					<textarea name="expected_solution" rows="5" cols="80" required></textarea>
 				</div>
 			</div>
 			<div >

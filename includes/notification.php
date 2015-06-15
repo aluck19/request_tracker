@@ -7,13 +7,22 @@ require_once (LIB_PATH . DS . 'database.php');
 class Notification extends DatabaseObject {
 
 	protected static $table_name = "notifications";
-	protected static $db_fields = array('id', 'request_id', 'body', 'created', 'visible');
+	protected static $db_fields = array('id', 'request_id', 'body', 'created', 'department');
 
 	public $id;
 	public $request_id;
 	public $body;
 	public $created;
-	public $visible;
+	public $department;
 
+	
+	public static function notification_department_count_all($department ="") {
+		global $database;
+		$sql = "SELECT COUNT(*) FROM " . static::$table_name. " WHERE department = '{$department}'";
+		$result_set = $database -> query($sql);
+		$row = $database -> fetch_array($result_set);
+		return array_shift($row);
+	}
+	
 }
 ?>

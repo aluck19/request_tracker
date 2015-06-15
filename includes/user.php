@@ -6,7 +6,7 @@ require_once (LIB_PATH . DS . 'database.php');
 class User extends DatabaseObject {
 
 	protected static $table_name = "users";
-	protected static $db_fields = array('id', 'username', 'password', 'first_name', 'last_name', 'role', 'email_id', 'created_by', 'created');
+	protected static $db_fields = array('id', 'username', 'password', 'first_name', 'last_name', 'role', 'email_id', 'department', 'created_by', 'created');
 
 	public $id;
 	public $username;
@@ -15,6 +15,7 @@ class User extends DatabaseObject {
 	public $last_name;
 	public $role;
 	public $email_id;
+	public $department;
 	public $created_by;
 	public $created;
 

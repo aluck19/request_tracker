@@ -6,8 +6,7 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 }
  ?>
  
-<?php 
-	// 1. the current page number ($current_page)
+<?php // 1. the current page number ($current_page)
 	$page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
 
 	// 2. records per page ($per_page)
@@ -19,13 +18,13 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 	//4. to limit pagination number
 	// 3 means abc[page]efg -> 3 right, 3 left
 	$stages = 2;
-	
+
 	$pagination = new Pagination($page, $per_page, $total_count);
 
 	// Instead of finding all records, just find the records
 	// for this page
 	$sql = "SELECT * FROM requests ";
-	$sql .= "WHERE user_id={$_SESSION['user_id']} ";
+	$sql .= "WHERE user_id={$_SESSION['user_id']} ORDER BY created DESC ";
 	$sql .= "LIMIT {$per_page} ";
 	$sql .= "OFFSET {$pagination->offset()} ";
 	$requests = Request::find_by_sql($sql);
@@ -48,28 +47,31 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 <?php echo output_message($message); ?>
 
 <div style="min-height: 8rem; padding-bottom: 40px;" class="ui stacked segment">
-	<p class="ui ribbon label">Request List</p>	
+	<p class="ui ribbon label">Submitted Requests</p>	
 	<table class="ui celled striped table">
 		<thead>
 		  <tr>
-		  	<th>Subject</th>
 		  	<th>Created</th>
+		  	<th>Subject</th>	
+		  	<th>Department</th>		  	
 		  	<th>Comments</th>
 		  	<th>View</th>  	
 		  </tr>
 	  </thead>
 	<?php foreach($requests as $request): ?>
 		  <tr>    
-		    <td><?php echo $request -> subject; ?></td>
 		    <td><?php echo datetime_to_text($request -> created); ?></td>
+		    <td><?php echo $request -> subject; ?></td>	
+		    <td><?php echo ucfirst($request -> department); ?></td>		   
 		    <td>
 				<a href="comments.php?id=<?php echo $request -> id; ?>"> 
-					<?php  
-					if(	count($request -> comments()) == 0){
+					<?php
+					if (count($request -> comments()) == 0) {
 						echo "No Comments";
-					}else {
-						echo count($request->comments());
-					}?> 
+					} else {
+						echo count($request -> comments());
+					}
+				?> 
 				</a>
 			</td>
 			<td>		
@@ -171,7 +173,6 @@ echo "<p><b>Total Result:</b> {$total_count}</p>";
 
 // pagination
 echo $paginate;
-
 ?>
 
 </div><!-- segment -->

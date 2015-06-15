@@ -16,11 +16,12 @@ if (isset($_POST['submit'])) {// Form has been submitted.
 	$find_username = User::find_by_username($username);
 	if (!$find_username){
 		// username/password combo was not found in the database	
-		$session->message("Username/password/role combination incorrect.");	
-		
+		$session->message("Username/password/role combination incorrect.");			
 		redirect_to("login.php");
 	}
+	
 	$hashed_password = $find_username -> password;
+	
 	$password = $hashed_password;
 	//we got the hashed password
 

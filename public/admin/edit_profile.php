@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 			<div class="field">
 				<label>Username</label>
 				<div>
-					<input type="text" name="username" value="<?php echo htmlentities($user -> username); ?>" />
+					<input type="text" name="username" value="<?php echo htmlentities($user -> username); ?>" required/>
 				</div>
 			</div>
 			<div class="field">
@@ -57,18 +57,22 @@ if (isset($_POST['submit'])) {
 			<div class="field">
 				<label>First Name</label>
 				<div >
-					<input type="text" name="first_name"  value="<?php echo htmlentities($user -> first_name); ?>" />
+					<input type="text" name="first_name"  value="<?php echo htmlentities($user -> first_name); ?>" required/>
 				</div>
 			</div>
 			<div class="field">
 				<label>Last Name</label>
 				<div >
-					<input type="text" name="last_name" value="<?php echo htmlentities($user -> last_name); ?>" />
+					<input type="text" name="last_name" value="<?php echo htmlentities($user -> last_name); ?>" required/>
 				</div>
 			</div>
 			<div class="field">
 				<label>Role</label>
 				<input type="text" name="role" value="<?php echo htmlentities(ucfirst($user -> role)); ?>" disabled/>
+			</div>
+			<div class="field">
+				<label>Department</label>
+				<input type="text" name="role" value="<?php echo htmlentities(ucfirst($user -> department)); ?>" disabled/>
 			</div>
 			<div class="field">
 				<label>Email Address</label>

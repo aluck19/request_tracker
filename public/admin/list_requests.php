@@ -5,36 +5,46 @@ require_once ("../../includes/initialize.php");
 if (!$session -> is_logged_in()) { redirect_to("login.php");
 }
  ?>
- <?php 
- 	// 1. the current page number ($current_page)
-	$page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+ <?php
+// 1. the current page number ($current_page)
+$page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
 
-	// 2. records per page ($per_page)
-	$per_page = 10;
+// 2. records per page ($per_page)
+$per_page = 10;
 
-	// 3. total record count ($total_count)
-	$total_count = Request::count_all();	
-	
-	//4. to limit pagination number
-	// 3 means abc[page]efg -> 3 right, 3 left
-	$stages = 2;
+// 3. total record count ($total_count)
+$total_count = Request::count_all();
 
-	$pagination = new Pagination($page, $per_page, $total_count);
+//4. to limit pagination number
+// 3 means abc[page]efg -> 3 right, 3 left
+$stages = 2;
 
-	// Instead of finding all records, just find the records
-	// for this page
-	$sql = "SELECT * FROM requests ";
-	$sql .= "LIMIT {$per_page} ";
-	$sql .= "OFFSET {$pagination->offset()}";
-	$requests = Request::find_by_sql($sql);
+$pagination = new Pagination($page, $per_page, $total_count);
 
-	if (empty($requests)) {
-		$session -> message("There are no requests in request vault.");
-		redirect_to('index.php');
-	}
+// Instead of finding all records, just find the records
+// for this page
+$sql = "SELECT * FROM requests  ";
 
-	// Need to add ?page=$page to all links we want to
-	// maintain the current page (or store $page in $session)
+
+if(isset($_POST['submit'])){
+	$department = strtolower($_POST['department']);
+}else {
+	$department = "library";
+}
+
+$sql .= "WHERE department='{$department}' ";
+
+$sql .= " LIMIT {$per_page} ";
+$sql .= "OFFSET {$pagination->offset()} ";
+$requests = Request::find_by_sql($sql);
+
+if (empty($requests)) {
+	$session -> message("There are no requests in request vault.");
+	redirect_to('index.php');
+}
+
+// Need to add ?page=$page to all links we want to
+// maintain the current page (or store $page in $session)
 ?>
 
 <?php include_layout_template('admin_header.php'); ?>
@@ -44,14 +54,30 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 
 <?php echo output_message($message); ?>
 
+<?php echo $department; ?>
+
 <div style="min-height: 8rem; padding-bottom: 40px;" class="ui stacked segment">
-	<p class="ui ribbon label">Request List</p>
+	<p class="ui ribbon label">All Request</p>
+	<br>
+	<br>
+	
+	<form action="<?php echo $_SERVER['PHP_SELF'] . "?sort=$department";?>" method="post">
+		<select class="ui search dropdown" name="department">
+		
+		  <option value="created">Library</option>
+		  <option value="department">Canteen</option>		  
+		  <option value="id">Administration</option>		  
+		</select>
+		  <input name="submit" class="ui blue button" type="submit"/>
+	</form>
+
 		<table class="ui celled striped table">
 		<thead>
 		  <tr>
-		  	<th>Subject &nbsp;</th>
-		  	<th>Requested By</th>
 		  	<th>Created</th>
+		  	<th>Department &nbsp;</th>
+		  	<th>Subject</th>
+		  	<th>Requested By</th>		  
 		  	<th>Comments</th>
 		  	<th>View</th>  	
 		  	<?php
@@ -64,22 +90,23 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 	  </thead>
 	<?php foreach($requests as $request): ?>
 		  <tr> 
-		  	   
+		    <td><?php echo datetime_to_text($request -> created); ?></td>
 		    <td><?php echo $request -> subject; ?></td>
-		    <td><?php $user = User::find_by_id($request -> user_id); 
-		    		echo $user-> first_name;
+		    <td><?php echo ucfirst($request -> department); ?></td>
+		    <td><?php $user = User::find_by_id($request -> user_id);
+				echo $user -> first_name;
 		    	?>
 		    	
-		    </td>
-		    <td><?php echo datetime_to_text($request -> created); ?></td>
+		    </td>		  
 		    <td>
 				<a href="comments.php?id=<?php echo $request -> id; ?>">
-						<?php  
-					if(	count($request -> comments()) == 0){
-						echo "No Comments";
-					}else {
-						echo count($request->comments());
-					}?>
+						<?php
+						if (count($request -> comments()) == 0) {
+							echo "No Comments";
+						} else {
+							echo count($request -> comments());
+						}
+				?>
 				</a>
 			</td>
 			<td>		
@@ -190,7 +217,6 @@ echo "<p><b>Total Result:</b> {$total_count}</p>";
 
 // pagination
 echo $paginate;
-
 ?>
 
 </div><!-- segment -->

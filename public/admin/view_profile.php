@@ -49,6 +49,11 @@ if (!$user) {
 		</p>
 	</div>
 	<div class="field">
+		<label>Department</label>
+		<p><?php echo ucfirst($user -> department); ?>
+		</p>
+	</div>
+	<div class="field">
 		<label>Email Address</label>
 		<p><?php echo $user -> email_id; ?>
 		</p>

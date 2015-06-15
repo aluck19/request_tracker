@@ -12,6 +12,14 @@ CREATE TABLE `requests` (
   PRIMARY KEY  (`id`)
 );
 
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL auto_increment,
+    `username` varchar(255) NOT NULL
+
+  
+);
+
+
 
 DROP TABLE IF EXISTS `comments`;
 

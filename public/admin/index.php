@@ -8,7 +8,26 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 
 <?php
 $user = User::find_by_id($_SESSION['user_id']);
-$notifications = Notification::find_all();
+
+//Get user department to find the department request
+$department = $user->department;
+	
+
+
+if($_SESSION['role']=="admin"){
+	$notifications = Notification::find_all();	
+	$total_count = Notification::count_all();
+}else {
+	$sql = "SELECT * FROM notifications ";
+	$sql .= "WHERE department = '{$department}' ";
+	
+	$notifications = Notification::find_by_sql($sql);
+	
+	$total_count = Notification::notification_department_count_all($department);
+}
+
+
+
 ?>
 
 <div>
@@ -76,6 +95,18 @@ View Log
 </div> </a>";
 				}
 				?>
+
+				<?php
+				if ($_SESSION['role'] == "moderator") {
+					echo "<a href=\"department_requests.php\" class=\"step\"> <i class=\"payment icon\"></i>
+						<div class=\"content\">
+						<div class=\"title\">
+						Department Requests
+						</div>
+						</div> </a>";
+				}
+				?>
+
 				<a href="logout.php" class="step"> <i class="remove icon"></i>
 				<div class="content">
 				<div class="title">
@@ -90,7 +121,7 @@ View Log
 <!-- col-lg-6 -->
 
 <?php //notfication count
-	$total_count = Notification::count_all();
+	
 
 	//notificatio count put html conditional code
 	if (!empty($notifications)) {

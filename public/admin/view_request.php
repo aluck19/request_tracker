@@ -110,6 +110,15 @@ $comments = $request -> comments();
 if (empty($comments)) { echo "No Comments.";
 }
  ?>
+ 
+ <?php 
+ if($_SESSION['user_id'] == $request->user_id)
+ 
+ echo  "<a href=\"delete_request.php?id={$request -> id}\" onclick=\"return confirm('Are you sure?');\">
+ 	<div style=\"float:right;\" class=\"negative ui button\">Close Request</div></a>";
+ 
+ 
+ ?>
 </div><!-- feed -->
 
 

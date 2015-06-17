@@ -32,7 +32,7 @@ if(isset($_POST['submit'])){
 	$department = "library";
 }
 
-$sql .= "WHERE department='{$department}' ";
+$sql .= "WHERE department='{$department}' ORDER BY created DESC ";
 
 $sql .= " LIMIT {$per_page} ";
 $sql .= "OFFSET {$pagination->offset()} ";
@@ -54,7 +54,6 @@ if (empty($requests)) {
 
 <?php echo output_message($message); ?>
 
-<?php echo $department; ?>
 
 <div style="min-height: 8rem; padding-bottom: 40px;" class="ui stacked segment">
 	<p class="ui ribbon label">All Request</p>
@@ -64,9 +63,9 @@ if (empty($requests)) {
 	<form action="<?php echo $_SERVER['PHP_SELF'] . "?sort=$department";?>" method="post">
 		<select class="ui search dropdown" name="department">
 		
-		  <option value="created">Library</option>
-		  <option value="department">Canteen</option>		  
-		  <option value="id">Administration</option>		  
+		  <option value="library">Library</option>
+		  <option value="canteen">Canteen</option>		  
+		  <option value="account">Account</option>		  
 		</select>
 		  <input name="submit" class="ui blue button" type="submit"/>
 	</form>
@@ -90,9 +89,9 @@ if (empty($requests)) {
 	  </thead>
 	<?php foreach($requests as $request): ?>
 		  <tr> 
-		    <td><?php echo datetime_to_text($request -> created); ?></td>
-		    <td><?php echo $request -> subject; ?></td>
+		    <td><?php echo datetime_to_text($request -> created); ?></td>		
 		    <td><?php echo ucfirst($request -> department); ?></td>
+		        <td><?php echo $request -> subject; ?></td>
 		    <td><?php $user = User::find_by_id($request -> user_id);
 				echo $user -> first_name;
 		    	?>

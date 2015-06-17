@@ -1,5 +1,5 @@
 <?php require_once("../../includes/initialize.php"); ?>
-<?php if (!$session->is_logged_in() || $_SESSION['role']!="admin") { redirect_to("login.php"); } ?>
+<?php if (!$session->is_logged_in() ) { redirect_to("login.php"); } ?>
 <?php
 	// must have an ID
   if(empty($_GET['id'])) {
@@ -10,6 +10,11 @@
   $request = Request::find_by_id($_GET['id']);
   if($request && $request->delete()) {
   	 $rq_subject = ucfirst($request-> subject);	
+	 
+	 if(empty($rq_subjectq)){
+	 	$rq_subject = "No subject";
+	 }
+	  
      $session->message("The request \"{$rq_subject}\" was deleted.");
     redirect_to('list_requests.php');
   } else {

@@ -7,7 +7,8 @@ require_once (LIB_PATH . DS . 'database.php');
 class Request extends DatabaseObject {
 
 	protected static $table_name = "requests";
-	protected static $db_fields = array('id', 'user_id', 'created', 'department', 'subject', 'description', 'expected_solution');
+	protected static $db_fields = array('id', 'user_id', 'created', 'department', 'subject', 'description', 'expected_solution', 
+										'priority', 'status','deadline');
 
 	public $id;
 	public $user_id;
@@ -16,6 +17,9 @@ class Request extends DatabaseObject {
 	public $subject;
 	public $description;
 	public $expected_solution;
+	public $priority;
+	public $status;
+	public $deadline;
 	
 	public function comments() {
 		return Comment::find_comments_on($this -> id);

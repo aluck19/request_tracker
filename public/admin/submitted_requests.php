@@ -53,7 +53,8 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 		  <tr>
 		  	<th>Created</th>
 		  	<th>Subject</th>	
-		  	<th>Department</th>		  	
+		  	<th>Department</th>	
+		  	<th>Priority</th>		  	
 		  	<th>Comments</th>
 		  	<th>View</th>  	
 		  </tr>
@@ -63,6 +64,7 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 		    <td><?php echo datetime_to_text($request -> created); ?></td>
 		    <td><?php echo $request -> subject; ?></td>	
 		    <td><?php echo ucfirst($request -> department); ?></td>		   
+		    <td><?php echo ucfirst($request -> priority); ?></td>
 		    <td>
 				<a href="comments.php?id=<?php echo $request -> id; ?>"> 
 					<?php

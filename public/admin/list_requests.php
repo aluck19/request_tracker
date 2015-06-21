@@ -47,6 +47,7 @@ if (empty($requests)) {
 // maintain the current page (or store $page in $session)
 ?>
 
+
 <?php include_layout_template('admin_header.php'); ?>
 
 <a class="ui blue basic button" href="index.php">&laquo; Back</a>
@@ -76,6 +77,7 @@ if (empty($requests)) {
 		  	<th>Created</th>
 		  	<th>Department &nbsp;</th>
 		  	<th>Subject</th>
+		  	<th>Priority</th>
 		  	<th>Requested By</th>		  
 		  	<th>Comments</th>
 		  	<th>View</th>  	
@@ -91,7 +93,8 @@ if (empty($requests)) {
 		  <tr> 
 		    <td><?php echo datetime_to_text($request -> created); ?></td>		
 		    <td><?php echo ucfirst($request -> department); ?></td>
-		        <td><?php echo $request -> subject; ?></td>
+		    <td><?php echo $request -> subject; ?></td>
+		    <td><?php echo $request -> priority; ?></td>		        
 		    <td><?php $user = User::find_by_id($request -> user_id);
 				echo $user -> first_name;
 		    	?>

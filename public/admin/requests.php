@@ -12,6 +12,7 @@ if (isset($_POST['submit'])) {
 	$request -> subject = $_POST['subject'];
 	$request -> description = $_POST['description'];
 	$request -> expected_solution = $_POST['expected_solution'];
+	$request -> priority = $_POST['priority'];
 	$request -> user_id = $_SESSION['user_id'];
 	$request -> created = strftime("%Y-%m-%d %H:%M:%S", time());
 
@@ -86,6 +87,14 @@ if (isset($_POST['submit'])) {
 					<textarea name="expected_solution" rows="5" cols="80" required></textarea>
 				</div>
 			</div>
+			<div class="field">
+				<label>Department</label>
+				<select name="priority" class="ui dropdown" >
+					<option>High</option>
+					<option>Middle</option>
+					<option>Low</option>
+				</select>
+			</div>		
 			<div >
 				<input class="ui green submit button"  type="submit" name="submit" value="Create Request" />
 			</div>

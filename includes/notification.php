@@ -24,5 +24,10 @@ class Notification extends DatabaseObject {
 		return array_shift($row);
 	}
 	
+	public static function find_by_request_id($request_id = 0) {
+		return static::find_by_sql("SELECT * FROM " . static::$table_name . " WHERE request_id={$request_id}");
+	}
+	
+	
 }
 ?>

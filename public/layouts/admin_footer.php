@@ -19,9 +19,9 @@
 
 	
 		<!-- Main Script -->
-		<script src="../js/main.js"></script>
+		<script src="public/js/main.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="../bootstrap/bootstrap.min.js"></script>
+		<script src="public/bootstrap/bootstrap.min.js"></script>
 
 	</body>
 </html>

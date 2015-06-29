@@ -46,6 +46,9 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 
 <?php echo output_message($message); ?>
 
+
+
+
 <div style="min-height: 8rem; padding-bottom: 40px;" class="ui stacked segment">
 	<p class="ui ribbon label">Submitted Requests</p>	
 	<table class="ui celled striped table">
@@ -54,7 +57,8 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 		  	<th>Created</th>
 		  	<th>Subject</th>	
 		  	<th>Department</th>	
-		  	<th>Priority</th>		  	
+		  	<th>Priority</th>	
+		  	<th>Status</th>	  	
 		  	<th>Comments</th>
 		  	<th>View</th>  	
 		  </tr>
@@ -65,6 +69,30 @@ if (!$session -> is_logged_in()) { redirect_to("login.php");
 		    <td><?php echo $request -> subject; ?></td>	
 		    <td><?php echo ucfirst($request -> department); ?></td>		   
 		    <td><?php echo ucfirst($request -> priority); ?></td>
+		    <td>		    	
+		    	<?php //current
+				$val1 = strftime("%Y-%m-%d %H:%M:%S", time());
+
+				//deadline  time
+				$val2 = $request -> deadline;
+
+				$date1 = date_create("$val1");
+				$date2 = date_create("$val2");
+
+				//calcualte the time difference
+				$diff = date_diff($date1, $date2);
+				echo $diff -> format("%R %a days %I minutes %S  seconds");
+				echo "<br>";
+				
+				if (strtotime($val1) > strtotime($val2)) {
+					echo "Time finished";
+				} else {
+					echo "Working";
+				}
+			?>
+		    	
+		    	
+		    </td>
 		    <td>
 				<a href="comments.php?id=<?php echo $request -> id; ?>"> 
 					<?php

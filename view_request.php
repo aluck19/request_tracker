@@ -23,6 +23,7 @@ if (!$request) {
 if (isset($_POST['deadline_submit'])) {
 	$deadline = strtotime($_POST['deadline']);
 	$request -> deadline = strftime("%Y-%m-%d %H:%M:%S", $deadline);
+	$request -> status = "working";
 	if ($request -> save()) {
 		$session -> message("Deadline set to {$_POST['deadline']}");
 	}
@@ -97,6 +98,8 @@ echo "<br>";
 
 <?php echo output_message($message); ?>
 
+
+
 <div style="min-height: 8rem;" class="ui stacked segment">
 	<p class="ui ribbon label">View Request: <?php echo $request -> subject; ?></p>
 	
@@ -125,9 +128,27 @@ echo "<br>";
 		<label>Created By</label>
 			<a href="view_profile.php?id=<?php echo $user->id?>"><p><?php echo $user -> full_name(); ?></p></a>
 	</div>
+	
+	<?php 
+	$deadline = $request -> deadline;
+	if($deadline != "0000-00-00 00:00:00"){
+		echo "
+		<div class=\"field\">
+			<label>Deadline</label>
+			<p>";				
+			echo datetime_to_text($request -> deadline);		
+			echo"</p>
+		</div>";		
+	}else {
+		echo "
+		<div class=\"field\">
+			<label>Deadline</label>
+			<p>Post a deadline</p>
+		</div>
+		";					
+	}		
+	?>
 </div>
-
-
 
 <h3>Comments</h3>
 <div class="ui feed" style="margin-top: 10px;">

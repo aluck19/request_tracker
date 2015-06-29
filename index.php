@@ -19,7 +19,7 @@ if($_SESSION['role']=="admin"){
 	$total_count = Notification::count_all();
 }else {
 	$sql = "SELECT * FROM notifications ";
-	$sql .= "WHERE department = '{$department}' ";
+	$sql .= "WHERE department = '{$department}'";
 	
 	$notifications = Notification::find_by_sql($sql);
 	
